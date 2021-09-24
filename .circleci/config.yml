@@ -66,11 +66,11 @@ jobs:
       - run:
           name: Back-end build
           command: |
-             # Your code here
-             cd backend
-             npm install
-             npm run build
-             # exit 1
+            # Your code here
+            cd backend
+            npm install
+            npm run build
+            # exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -84,14 +84,14 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-        keys: [frontend-build]
+          keys: [frontend-build]
       # Your job code here
       - run:
-        name: testing the frontend
-        command: |
-          cd frontend
-          npm i
-          npm run test
+          name: testing the frontend
+          command: |
+            cd frontend
+            npm i
+            npm run test
       # exit 1
                 
   test-backend:
@@ -103,13 +103,13 @@ jobs:
       - checkout
       # Restore from cache
       - restore_cache:
-        keys: [backend-build]
+          keys: [backend-build]
       # Your job code here
       - run:
-        name: testing the backend
-        command: |
-          cd backend
-          npm run test
+          name: testing the backend
+          command: |
+            cd backend
+            npm run test
       # exit 1
             
   scan-frontend:
@@ -124,10 +124,10 @@ jobs:
         keys: [frontend-build]
       # Your job code here
       - run:
-        name: scanning the frontend
-        command: |
-          cd frontend
-          npm audit --audit-level=critical
+          name: scanning the frontend
+          command: |
+            cd frontend
+            npm audit --audit-level=critical
       # exit 1
 
   scan-backend:
@@ -142,10 +142,10 @@ jobs:
         keys: [backend-build]
       # Your job code here
       - run:
-        name: scanning the backend
-        command: |
-          cd backend
-          npm audit --audit-level=critical
+          name: scanning the backend
+          command: |
+            cd backend
+            npm audit --audit-level=critical
       # exit 1
 
   deploy-infrastructure:
