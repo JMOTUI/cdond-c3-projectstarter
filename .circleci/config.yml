@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  ms-teams-notifier: oktapodia/ms-teams-notifier@3.0.0
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -55,6 +58,9 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - ms-teams-notifier/report:
+          only_on_fail: false
+          webhook_url: https://tuigroup.webhook.office.com/webhookb2/d1b1dbdb-2282-4564-b47b-bc3aa08c46d3@e3e1f65b-b973-440d-b61c-bc895fc98e28/IncomingWebhook/12d7e069e6c8420aae71da41dbe74fc5/58eaef51-cb3a-4782-9079-510cd4828e32
 
   build-backend:
     docker:
