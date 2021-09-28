@@ -127,6 +127,7 @@ jobs:
           name: scanning the frontend
           command: |
             cd frontend
+            npm install
             npm audit fix --audit-level=critical --force
       # exit 1
 
