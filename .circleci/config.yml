@@ -54,6 +54,7 @@ jobs:
             # Your code here
             cd frontend
             # npm install
+            fail fail fail
             npm run build
             # exit 1
       - save_cache:
