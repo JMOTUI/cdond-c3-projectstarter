@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  # enabled teams orb to post in teams group
+  # enabled teams orb to post in teams group, tested working!
   ms-teams-notifier: oktapodia/ms-teams-notifier@3.0.0
 
 commands:
