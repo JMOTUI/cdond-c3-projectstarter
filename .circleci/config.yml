@@ -173,7 +173,7 @@ jobs:
       - checkout
       - run:
           name: install requisites.
-          comand: |
+          command: |
             yum -y install tar gzip jq git
       - run:
           name: Ensure back-end infrastructure exists
