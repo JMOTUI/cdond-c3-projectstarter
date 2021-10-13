@@ -1,0 +1,2 @@
+- name: Include Prerequisites file in Ansible
+  include_tasks: prerequisites.yml
