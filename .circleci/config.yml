@@ -232,7 +232,7 @@ jobs:
             - "ee:b7:60:ca:84:fb:41:b7:2b:84:9f:ba:c1:ba:7f:50:2b:77:df:ec"
       # attach workspace
       - attach_workspace:
-          at: /tmp/.circleci/ansible
+          at: /.circleci/ansible
       - run:
           name: Install dependencies
           command: |
@@ -257,18 +257,44 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Dependencies
+          command: |
+            sudo apt update
+            sudo apt install -y awscli
       - run:
           name: Run migrations
           command: |
             # Your code here
-            exit 1
+            cd backend
+            cat .env
+            npm i
+            npm run build
+            npm run migrations 2>&1 | tee migrationlog.txt
+
+            SUCCESS="${PIPESTATUS}"
+            if [[ ! "$SUCCESS}" == 0 ]]; then
+              resturn 1
+            fi
+            # exit 1
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
-            exit 1
+            if cat migrationlog.txt | grep "has been executed successfully"; then
+              curl -H "Content-Type: text/plain" -H  "token: ${CIRCLE_WORKflOW_ID}" --request PUT --data "1" https://api.memstash.io/values/migration-"${CIRCLE_WORKFLOW_ID}"
+            fi
+            # exit 1
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - backend
      # Here's where you will add some code to rollback on failure      
-
+      - destroy-environment:
+          workflow-id: "${CIRCLE_WORKFLOW_ID}"
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
