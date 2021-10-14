@@ -236,8 +236,9 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            apt -y update
-            apt -y install ansible aws-cli
+            # apt -y update
+            # apt -y install ansible aws-cli
+            apk add --update ansible aws-cli
             # exit 1
       - run:
           name: Configure server
