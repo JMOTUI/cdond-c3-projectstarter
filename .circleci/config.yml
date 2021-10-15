@@ -266,7 +266,7 @@ jobs:
             sudo apt update
             sudo apt install -y awscli
       - run:
-          name: prep env file, have to insert manually.
+          name: prep env file, have to insert manually
           command: |
             cat \<< EOF > backend/.env
             ENVIRONMENT=production
