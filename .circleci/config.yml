@@ -253,7 +253,7 @@ jobs:
 
   run-migrations:
     docker:
-      # Docker image here that supports NodeJS
+      # Docker image here that supports NodeJS, using aws cli
       # - image: circleci/node:13.8.0
       - image: amazon/aws-cli
     steps:
