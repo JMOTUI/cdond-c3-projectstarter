@@ -298,7 +298,7 @@ jobs:
 
             SUCCESS="${PIPESTATUS}"
             if [[ ! "$SUCCESS}" == 0 ]]; then
-              resturn 1
+              return 1
             fi
             # exit 1
       - run:
