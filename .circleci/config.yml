@@ -330,7 +330,7 @@ jobs:
           command: |
             # your code here
             yum install -y curl tar sudo
-            curl -sL https://rpm.nodesource.com/setup:13.x | sudo bash -
+            curl -sL https://rpm.nodesource.com/setup_13.x | sudo bash -
             yum install -y nodejs
       - run:
           name: Get backend url
