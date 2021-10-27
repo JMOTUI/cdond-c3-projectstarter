@@ -356,20 +356,37 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: python:3.7-alpine3.11
+      - image: python:3.9.1-alpine3.12
     steps:
       # Checkout code from git
+      - checkout
       # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints:
+              - "6b:1f:3c:ff:89:2d:18:3e:50:7a:05:e0:50:5d:a9:03"
       # attach workspace
+      - attach_workspace:
+          at: /tmp/artifacts
       - run:
           name: Install dependencies
           command: |
             # your code here
+            apk update
+            apk add --update ansible aws-cli openssh-client tar
+      - run:
+          name: Compress backend
+          command: |
+            tar -C /tmp/artifacts/backend -czvf artifact.tar.gz .
       - run:
           name: Deploy backend
           command: |
             # your code here
+            cd .circleci/ansible
+            export ANSIBLE_HOST_KEY_CHECKING=False
+            ansible-playbook -i /tmp/artifacts/inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
+      - detroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID}"
 
   smoke-test:
     docker:
