@@ -297,7 +297,7 @@ jobs:
             npm run migrations | tee migrationlog.txt
 
             SUCCESS="${PIPESTATUS}"
-            if [[ ! "$SUCCESS}" == 0 ]]; then
+            if [[ ! "${SUCCESS}" == 0 ]]; then
               return 1
             fi
             # exit 1
