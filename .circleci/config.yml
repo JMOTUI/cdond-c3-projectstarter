@@ -385,7 +385,7 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook -i /tmp/artifacts/inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
-      - detroy-environment:
+      - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID}"
 
   smoke-test:
