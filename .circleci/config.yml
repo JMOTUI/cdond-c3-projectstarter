@@ -400,7 +400,7 @@ jobs:
           command: |
             # your code here
             sudo apt update
-            sudo api install -y awscli
+            sudo apt install -y awscli
             sudo apt install -y python3 ansible
       - run:
           name: Get backend url
