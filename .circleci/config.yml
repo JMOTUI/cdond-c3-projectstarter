@@ -413,7 +413,8 @@ jobs:
             # your code here
             url=$(cat backendurl.txt)
             url="http://${url}:3030/api/status"
-            curl $url
+            echo ${url}
+            curl -s ${url}
       - run:
           name: Frontend smoke test.
           command: |
