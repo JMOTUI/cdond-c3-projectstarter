@@ -214,11 +214,12 @@ jobs:
             export BACKEND_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" \
               --request GET https://api.memstash.io/values/backendurl)
             echo "${BACKEND_URL}" >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
             # exit 1
       - persist_to_workspace:
-          root: ~/
+          root: .circleci/ansible
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - inventory.txt
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID}"
