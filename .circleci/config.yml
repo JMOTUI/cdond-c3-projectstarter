@@ -186,7 +186,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
-              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID}" \
+              --stack-name udapeople-backend-"${CIRCLE_WORKFLOW_ID}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}"  
             
             export BACKEND_URL=$(aws cloudformation describe-stacks \
@@ -385,6 +385,7 @@ jobs:
             # your code here
             cd .circleci/ansible
             export ANSIBLE_HOST_KEY_CHECKING=False
+            cat /tmp/artifacts/inventory.txt
             ansible-playbook -i /tmp/artifacts/inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
