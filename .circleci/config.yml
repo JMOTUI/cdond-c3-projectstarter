@@ -21,8 +21,8 @@ commands:
             if aws s3 ls | grep udapeople-<<parameters.workflow_id>>; then
               aws s3 rm s3://udapeople-<<parameters.workflow_id>> --recursive
             fi
-            aws cloudformation delete-stack --stack-name frontendstack-<<parameters.workflow_id>>
-            aws cloudformation delete-stack --stack-name backendstack-<<parameters.workflow_id>>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflow_id>>
+            aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflow_id>>
             # exit 1
       - revert-migrations:
           workflow_id: <<parameters.workflow_id>>
@@ -194,6 +194,8 @@ jobs:
               --query "Stacks[0].Outputs[?OutputKey=='BackendURL'].OutputValue" \
               --no-paginate --output text)
 
+            echo $BACKEND_URL
+
             curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "${BACKEND_URL}" https://api.memstash.io/values/backendurl
               # exit 1
       - run:
@@ -308,6 +310,7 @@ jobs:
           command: |
             # Your code here
             if cat migrationlog.txt | grep "has been executed successfully"; then
+              echo "found has been executed successfully in migrationlog"
               curl -H "Content-Type: text/plain" -H  "token: ${CIRCLE_WORKflOW_ID}" --request PUT --data "1" https://api.memstash.io/values/migration-"${CIRCLE_WORKFLOW_ID}"
             fi
             # exit 1
