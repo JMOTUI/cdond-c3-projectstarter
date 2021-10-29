@@ -304,10 +304,6 @@ jobs:
             if [[ ! "${SUCCESS}" == 0 ]]; then
               return 1
             fi
-            # exit 1
-      - run:
-          name: Send migration results to memstash
-          command: |
             # Your code here
             if cat migrationlog.txt | grep "has been executed successfully"; then
               echo "found has been executed successfully in migrationlog"
