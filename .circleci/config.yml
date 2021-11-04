@@ -367,6 +367,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
               - "6b:1f:3c:ff:89:2d:18:3e:50:7a:05:e0:50:5d:a9:03"
+      - restore_cache:
+          keys: [backend-build]
       # attach workspace
       - attach_workspace:
           at: /tmp/artifacts
