@@ -191,7 +191,7 @@ jobs:
             
             BACKEND_URL=`aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}" \
-              --query "Reservations[*].Instances[*].[PublicDnsName]" \
+              --query "Reservations[*].Instances[*].[PublicIpAddress]" \
               --output text | tr -d '\n'`
 
             echo $BACKEND_URL
