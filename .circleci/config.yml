@@ -403,6 +403,7 @@ jobs:
       - run:
           name: Compress backend
           command: |
+            ls -al
             tar -C /tmp/artifacts/backend -czvf artifact.tar.gz .
       - run:
           name: Deploy backend
