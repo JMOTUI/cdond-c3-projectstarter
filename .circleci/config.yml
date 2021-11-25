@@ -401,13 +401,15 @@ jobs:
           command: |
             # your code here
             apk update
-            apk add --update ansible aws-cli openssh-client tar
+            apk add --update ansible aws-cli openssh-client tar tree
       - run:
           name: Compress backend
           command: |
             pwd
             ls -al
             tar -C /tmp/artifacts/backend -czvf artifact.tar.gz .
+            cd /
+            tree
       - run:
           name: Deploy backend
           command: |
