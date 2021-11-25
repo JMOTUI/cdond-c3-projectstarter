@@ -1,2 +1,25 @@
-- name: Include Prerequisites file in Ansible
-  include_tasks: prerequisites.yml
+---
+- name: "npm"
+  become: yes
+  apt:
+    name: npm
+    update_cache: yes
+    state: latest
+
+- name: "nvm"
+  become: yes
+  npm:
+    name: n
+    global: yes
+
+- name: "nodejs"
+  become: yes
+  command: n 13.8.0
+
+- name: "pm2"
+  become: yes
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
