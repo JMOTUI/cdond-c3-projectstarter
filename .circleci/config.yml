@@ -231,7 +231,7 @@ jobs:
             # Your code here
             #export BACKEND_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" \
             #  --request GET https://api.memstash.io/values/backendurl)
-            ${BACKEND_URL} = $(echo .circleci/backendurl.txt)
+            BACKEND_URL=$(echo .circleci/backendurl.txt)
             echo "${BACKEND_URL}" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             # exit 1
