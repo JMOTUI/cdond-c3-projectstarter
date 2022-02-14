@@ -35,12 +35,6 @@ commands:
         type: string 
     steps:
       - run:
-          name: install requisites.
-          command: |
-            yum -y install tar gzip jq git
-      - attach_workspace:
-          at: /tmp/.circleci/ansible
-      - run:
           name: Revert migrations
           # Add when this will run
           when: on_fail
