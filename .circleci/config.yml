@@ -48,7 +48,7 @@ commands:
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             # SUCCESS = 1
             # SUCCESS=$(curl -H "token: <<parameters.workflow_id>>" --request GET https://api.memstash.io/values/migration-<<parameters.workflow_id>>)
-            SUCCESS=$(echo .circleci/migrationstatus.txt)
+            SUCCESS=$(curl --insecure  "https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/migration-<<parameters.workflow_id>>")
             echo $SUCCESS
             if [[ "${SUCCESS}" == 1 ]]; 
             then
@@ -219,9 +219,10 @@ jobs:
               --query "Reservations[*].Instances[*].[PublicIpAddress]" \
               --output text | tr -d '\n'`
 
-            echo $BACKEND_URL > .circleci/backendurl.txt
+            # echo $BACKEND_URL > .circleci/backendurl.txt
 
             # curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "${BACKEND_URL}" https://api.memstash.io/values/backendurl
+            curl https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/backendurl  -d "${BACKEND_URL}"
 
               # exit 1
       - run:
@@ -239,7 +240,7 @@ jobs:
             # Your code here
             #export BACKEND_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" \
             #  --request GET https://api.memstash.io/values/backendurl)
-            BACKEND_URL=$(echo .circleci/backendurl.txt)
+            export BACKEND_URL=$(curl --insecure  "https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/backendurl")
             echo "${BACKEND_URL}" >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
             # exit 1
@@ -346,7 +347,8 @@ jobs:
             if cat migrationlog.txt | grep "has been executed successfully"; then
               echo "found has been executed successfully in migrationlog"
               # curl -H "Content-Type: text/plain" -H  "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "1" https://api.memstash.io/values/migration-"${CIRCLE_WORKFLOW_ID}"
-              echo "1" > .circleci/migrationstatus.txt
+              curl https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/migration-"${CIRCLE_WORKFLOW_ID}"  -d '1'
+              # echo "1" > .circleci/migrationstatus.txt
             fi
             # exit 1
       - persist_to_workspace:
@@ -379,6 +381,7 @@ jobs:
           command: |
             # your code here
             # export API_URL=$(curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backendurl)
+            export API_URL=$(curl --insecure  https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/backendurl)
             export API_URL="http://${API_URL}:3030"
             echo "${API_URL}"
             echo "${API_URL}" > .circleci/api_url.txt
@@ -459,7 +462,8 @@ jobs:
           command: |
             # your code here
             # curl -H "token: ${CIRCLE_WORKFLOW_ID}" --request GET https://api.memstash.io/values/backendurl > backendurl.txt
-            echo ./circleci/backendurl > backendurl.txt
+            curl --insecure  https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/backendurl > backendurl.txt
+            # echo ./circleci/backendurl > backendurl.txt
       - run:
           name: Backend smoke test.
           command: |
