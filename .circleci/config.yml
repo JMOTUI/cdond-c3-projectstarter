@@ -520,9 +520,8 @@ jobs:
             export OldWorkflowID=$(curl --insecure  https://kvdb.io/3HrhMKaRV6AweK1CP7xqEt/oldworkflowid)
             echo $OldWorkflowID
             # export STACKS=[] #put the list of stacks here
-      - run:
-          name: Remove old stacks and files
-          command: |
+
+            #made two command blocks into one
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               # your code here
